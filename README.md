@@ -3,4 +3,3 @@ Vehicle Index API that allows users to retrieve various information regarding a 
 
 Vehicle database 
 
-valentin is gay
