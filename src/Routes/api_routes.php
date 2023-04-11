@@ -15,7 +15,7 @@ global $app;
 // The Vanier\Api must be used as namespace prefix. 
 
 // ROUTE: /
-$app->get('/', [AboutController::class, 'handleAboutApi']); 
+$app-> get('/', [AboutController::class, 'handleAboutApi']); 
 
 // ROUTE: /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {
@@ -28,6 +28,11 @@ $app->get('/car/{id}', [CarController::class, 'getCar']);
 
 $app->get('/engines', [EngineController::class, 'getAllEngine']);
 $app->get('/engine/{id}', [EngineController::class, 'getEngine']);   
+
+$app->get('/vin/{vinNumber}', [CarController::class, 'getCarByVin']);
+$app->get('/vin/getManufacturer/{vinNumber}', [CarController::class, 'getCarByVin']);
+
+$app->get('/recall/{recallID}', [RecallController::class, 'getRecall']);
 
 //Can't add another engine because I also need to assign it's FK to a car
 //$app->post('/addengine', [EngineController::class, 'addEngine']);

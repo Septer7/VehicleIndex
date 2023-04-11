@@ -1,0 +1,24 @@
+{
+    "name": "vanier/api",
+    "description": "A sample app skeleton to be used to write an HTTP client using Guzzle library.",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Vanier\\Api\\": "src/"
+        }
+    },
+    "license": "MIT",
+    "authors": [{
+        "name": "Veaceslav Vlas",
+        "email": "vlasveaci@gmail.com"
+    }],
+    "require": {
+        "slim/slim": "4.11",
+        "guzzlehttp/guzzle": "^7.5",
+        "vlucas/phpdotenv": "^5.5",
+        "firebase/php-jwt": "^6.3",
+        "monolog/monolog": "^2.9",
+        "symfony/yaml": "^6.0",
+        "slim/psr7": "^1.4"
+    }
+}
