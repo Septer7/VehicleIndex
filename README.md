@@ -1,6 +1,6 @@
 # Vehicle Web API (Web Services Project)
 
-Vehicle API allows users to retrieve various information regarding a certain type of vehicle, iicluding Vin Decoding as well as Recall Data.
+Vehicle API allows users to retrieve various information regarding a certain type of vehicle, including Vin Decoding as well as Recall Data.
 This is the repository for the group project of the **"TBD"** team for WEB SERVICES W23 at Vanier College. It includes:
 
 - All files (Project File, Images)
