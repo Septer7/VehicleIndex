@@ -1,12 +1,21 @@
 <?php
-
 namespace Vanier\Api\Controllers;
-
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Vanier\Api\Helpers\ValidationHelper;
 
+
+/**
+ * Summary of BaseController
+ */
 class BaseController
 {
+    public function __construct()
+    {
+        
+    }
+
+  
     protected function prepareOkResponse(Response $response, array $data, int $status_code = 200)
     {
         // var_dump($data);
