@@ -3,11 +3,17 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
 use Vanier\Api\Controllers\AboutController;
+use Vanier\Api\Controllers\AuthController;
 use Vanier\Api\Controllers\BaseController;
 use Vanier\Api\Controllers\CarController;
 use Vanier\Api\Controllers\EngineController;
 use Vanier\Api\Controllers\VinController;
+use Vanier\Api\Helpers\JWTManager;
 use Vanier\Api\Middleware\ContentNegotiationMiddleware;
+
+define('APP_BASE_DIR', __DIR__);
+// IMPORTANT: This file must be added to your .ignore file. 
+define('APP_ENV_CONFIG', 'config.env');
 
 require __DIR__ . '/vendor/autoload.php';
  // Include the file that contains the application's global configuration settings,
@@ -22,6 +28,26 @@ $app->add(new ContentNegotiationMiddleware([APP_MEDIA_TYPE_XML, APP_MEDIA_TYPE_Y
 
 //-- Step 2) Add routing middleware.
 $app->addRoutingMiddleware();
+
+// authentication middleware
+/*$jwt_secret = JWTManager::getSecretKey();
+$app->add(new Tuupola\Middleware\JwtAuthentication([
+            'secret' => $jwt_secret,
+            'algorithm' => 'HS256',
+            'secure' => false, // only for localhost for prod and test env set true            
+            "path" => $api_base_path, // the base path of the API
+            "attribute" => "decoded_token_data",
+            "ignore" => ["$api_base_path/token", "$api_base_path/account"],
+            "error" => function ($response, $arguments) {
+                $data["status"] = "error";
+                $data["message"] = $arguments["message"];
+                $response->getBody()->write(
+                        json_encode($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT)
+                );
+                return $response->withHeader("Content-Type", "application/json;charset=utf-8");
+            }
+        ]));*/
+
 // body parsing middleware
 $app->addBodyParsingMiddleware();
 //-- Step 3) Add error handling middleware.
@@ -58,6 +84,9 @@ $app->get('/recall/{recallID}', [RecallController::class, 'getRecallByID']);
 //Can't add another engine because I also need to assign it's FK to a car
 //$app->post('/addengine', [EngineController::class, 'addEngine']);
 
+//AA-Routes
+$app->post('/account', [AuthController::class, 'handleCreateUserAccount']);
+$app->post('/token', [AuthController::class, 'handleGetToken']);
 
 $app->post('/addcar', [CarController::class, 'addCar']);
 
