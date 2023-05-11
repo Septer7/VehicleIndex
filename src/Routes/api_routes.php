@@ -5,6 +5,7 @@ use Slim\Factory\AppFactory;
 use Vanier\Api\Controllers\AboutController;
 use Vanier\Api\Controllers\CarController;
 use Vanier\Api\Controllers\EngineController;
+use Vanier\Api\Controllers\AuthenticationController;
 use Vanier\Api\Models\CarModel;
 
 // Import the app instance into this file's scope.
@@ -47,4 +48,5 @@ $app->delete('/deleteEngine/{CarId}',[EngineController::class, 'deleteEngine']);
 $app->put('/updateCar/{CarId}',[CarController::class, 'updateCar']);
 $app->put('/updateEngine/{CarId}',[EngineController::class, 'updateEngine']);
 
-
+$app->post('/account', [AuthenticationController::class, 'handleCreateUserAccount']);
+$app->post('/token', [AuthenticationController::class, 'handleGetToken']);
