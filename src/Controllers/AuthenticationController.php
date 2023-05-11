@@ -49,7 +49,7 @@ class AuthenticationController extends BaseController
     
         // Valid user detected => Now, we generate and return a JWT.
         // Current time stamp * 60 minutes * 60 seconds
-        $jwt_user_info = ["id" => $db_user["user_id"], "email" => $db_user["email"]];
+        $jwt_user_info = ["id" => $db_user["user_id"], "role" => $db_user["role"] , "email" => $db_user["email"]];
         $expires_in = time() + 60 * 60; // Expires in 1 hour.
         // $expires_in = time() + 60; // Expires in 1 minute.
         $user_jwt = JWTManager::generateToken($jwt_user_info, $expires_in);
