@@ -21,16 +21,6 @@ This is the repository for the group project of the **"TBD"** team for WEB SERVI
           "role":"admin"
         }]
     '
-5. In Thunder Client go to [Post] 'http://localhost/vehicle-api/account'
-    Body'
-        [{
-          "email":"veaci@gmail.com",
-          "first_name":"Veaci",
-          "last_name":"Vlas",
-          "password":"121212",
-          "role":"admin"
-        }]
-    '
     note: it must be insite a map [], done for creating multiple accounts at once.
     
  6. In Thunder Client go to [Post] 'http://localhost/vehicle-api/token'   
