@@ -5,6 +5,7 @@ use Slim\Factory\AppFactory;
 use Vanier\Api\Controllers\AboutController;
 use Vanier\Api\Controllers\CarController;
 use Vanier\Api\Controllers\EngineController;
+use Vanier\Api\Controllers\VinController;
 use Vanier\Api\Controllers\AuthenticationController;
 use Vanier\Api\Models\CarModel;
 
@@ -30,8 +31,8 @@ $app->get('/car/{id}', [CarController::class, 'getCar']);
 $app->get('/engines', [EngineController::class, 'getAllEngine']);
 $app->get('/engine/{id}', [EngineController::class, 'getEngine']);   
 
-$app->get('/vin/{vinNumber}', [CarController::class, 'getCarByVin']);
-$app->get('/vin/getManufacturer/{vinNumber}', [CarController::class, 'getCarByVin']);
+$app->get('/vin/{vinNumber}', [VinController::class, 'getCarByVin']);
+$app->get('/vin/getManufacturer/{vinNumber}', [VinController::class, 'getCarByVin']);
 
 $app->get('/recall/{recallID}', [RecallController::class, 'getRecall']);
 

@@ -3,6 +3,7 @@ namespace Vanier\Api\Controllers;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Vanier\Api\Helpers\Validator;
+use Vanier\Api\Models\WSLoggingModel;
 
 //FOR COMPOSITE RESOURCES
 use GuzzleHttp\Client as GuzzleClient;
@@ -22,6 +23,16 @@ class RecallController extends BaseController
     //retrieves car record from nhtsa api based on the vin number provided
     public function getRecallByID(Request $request, Response  $response, array $args )
     {
+        // 1) Retrieve the parsed JWT form request object.
+        $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
+        
+        // 2) Log request info into th ws_logtable.
+        $logging_model = new WSLoggingModel();
+        $request_info = $_SERVER["REMOTE_ADDR"].' '.$request->getUri()->getPath();
+        $logging_model->logUserAction($token_payload, $request_info);
+
+        //
+        
         $api_recall_DECODE = "https://vrdb-tc-apicast-production.api.canada.ca/eng/vehicle-recall-database/v1/recall-summary/recall-number/";
         $clientDECODE = new GuzzleClient(['base_uri' => $api_recall_DECODE]);
         $data = array();
@@ -54,6 +65,16 @@ class RecallController extends BaseController
 
     public function getManufacturerByVin(Request $request, Response  $response, array $args )
     {
+        // 1) Retrieve the parsed JWT form request object.
+        $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
+        
+        // 2) Log request info into th ws_logtable.
+        $logging_model = new WSLoggingModel();
+        $request_info = $_SERVER["REMOTE_ADDR"].' '.$request->getUri()->getPath();
+        $logging_model->logUserAction($token_payload, $request_info);
+
+        //
+        
         $api_vin_WMI = "https://vpic.nhtsa.dot.gov/api/vehicles/decodewmi/";
         $clientWMI = new GuzzleClient(['base_uri' => $api_vin_WMI]);
         $data = array();
@@ -86,7 +107,7 @@ class RecallController extends BaseController
 
     
 }
-function searchForRecall(GuzzleClient $client, $vinNumber) {
+function searchForRecall(Request $request, GuzzleClient $client, $vinNumber) {
     $response = $client->request('GET', $vinNumber);
     $data = json_decode($response->getBody()->getContents());
     return $data;
