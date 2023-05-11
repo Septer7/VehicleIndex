@@ -1,5 +1,9 @@
 <?php
 namespace Vanier\Api\Models;
+
+use DateTime;
+use DateTimeZone;
+
 /**
  * A class that is used for logging user actions.
  *

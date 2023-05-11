@@ -58,44 +58,11 @@ $errorMiddleware->forceContentType(APP_MEDIA_TYPE_JSON);
 
 //-- Step 5)
 // Here we include the file that contains the application routes. 
-require_once __DIR__ . './src/routes/api_routes.php';
-
 // NOTE: Add your app routes here.
 // The callbacks must be implemented in a controller class.
 // The Vanier\Api must be used as namespace prefix. 
 
-// Root
-// $app->get('/', [AboutController::class, 'handleAboutApi']); 
-
-// $app->get('/cars', [CarController::class, 'getAllCars']);
-// $app->get('/car/{id}', [CarController::class, 'getCar']);  
-
-// $app->get('/engines', [EngineController::class, 'getAllEngine']);
-// $app->get('/engine/{id}', [EngineController::class, 'getEngine']);   
-
-// $app->get('/vin/{vinNumber}', [VinController::class, 'getCarByVin']);
-// $app->get('/vin/getManufacturer/{vinNumber}', [VinController::class, 'getManufacturerByVin']);
-
-// $app->get('/recall/{recallID}', [RecallController::class, 'getRecallByID']);
-
-// //Can't add another engine because I also need to assign it's FK to a car
-// //$app->post('/addengine', [EngineController::class, 'addEngine']);
-
-
-// $app->post('/addcar', [CarController::class, 'addCar']);
-
-
-// $app->delete('/deleteCar/{CarId}',[CarController::class, 'deleteCar']);
-// $app->delete('/deleteEngine/{CarId}',[EngineController::class, 'deleteEngine']);
-
-// $app->put('/updateCar/{CarId}',[CarController::class, 'updateCar']);
-// $app->put('/updateEngine/{CarId}',[EngineController::class, 'updateEngine']);
-
-// // Test route
-// $app->get('/hello', function (Request $request, Response $response, $args) {
-//     $response->getBody()->write("Hello! API is Ready..");    
-//     return $response->withStatus(HTTP_OK);
-// });
+require_once __DIR__ . './src/routes/api_routes.php';
 
 // This is a middleware that should be disabled/enabled later. 
 //$app->add($beforeMiddleware);

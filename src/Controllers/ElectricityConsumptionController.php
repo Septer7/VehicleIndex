@@ -13,6 +13,7 @@ class ElectricityConsumptionController {
     }
  
     public function getAll() {
+      
        $query = "SELECT * FROM electricity_consumption";
        $result = $this->db->query($query);
  

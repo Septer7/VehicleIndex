@@ -3,7 +3,7 @@ namespace Vanier\Api\Controllers;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Vanier\Api\Helpers\Validator;
-
+use Vanier\Api\Models\WSLoggingModel;
 //FOR COMPOSITE RESOURCES
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request as GuzzleRequest;    
@@ -23,6 +23,15 @@ class VinController extends BaseController
     //retrieves car record from nhtsa api based on the vin number provided
     public function getCarByVin(Request $request, Response  $response, array $args )
     {
+        // 1) Retrieve the parsed JWT form request object.
+        $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
+            
+        // 2) Log request info into th ws_logtable.
+        $logging_model = new WSLoggingModel();
+        $request_info = $_SERVER["REMOTE_ADDR"].' '.$request->getUri()->getPath();
+        $logging_model->logUserAction($token_payload, $request_info);
+
+        //
         $api_vin_DECODE = "https://vpic.nhtsa.dot.gov/api/vehicles/decodevinvalues/";
         $clientDECODE = new GuzzleClient(['base_uri' => $api_vin_DECODE]);
         $data = array();
@@ -55,6 +64,15 @@ class VinController extends BaseController
 
     public function getManufacturerByVin(Request $request, Response  $response, array $args )
     {
+        // 1) Retrieve the parsed JWT form request object.
+        $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
+            
+        // 2) Log request info into th ws_logtable.
+        $logging_model = new WSLoggingModel();
+        $request_info = $_SERVER["REMOTE_ADDR"].' '.$request->getUri()->getPath();
+        $logging_model->logUserAction($token_payload, $request_info);
+
+        //
         $api_vin_WMI = "https://vpic.nhtsa.dot.gov/api/vehicles/decodewmi/";
         $clientWMI = new GuzzleClient(['base_uri' => $api_vin_WMI]);
         $data = array();
