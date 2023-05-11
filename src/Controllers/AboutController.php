@@ -14,6 +14,7 @@ class AboutController extends BaseController
         $exposed_resources['GET | Vin Decode'] = '/vin/{vinNumber}';
         $exposed_resources['GET | Manufacturer by Vin'] = '/vin/getManufacturer/{vinNumber}';
                     
-        return $this->prepareOkResponse($response, $exposed_resources);
+        return $this->prepareOkResponse($response, $exposed_resources);            
+        
     }
 }

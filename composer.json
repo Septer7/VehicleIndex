@@ -15,10 +15,13 @@
     "require": {
         "slim/slim": "4.11",
         "guzzlehttp/guzzle": "^7.5",
+        "guzzlehttp/psr7": "^2.4",
         "vlucas/phpdotenv": "^5.5",
-        "firebase/php-jwt": "^6.3",
-        "monolog/monolog": "^2.9",
+        "firebase/php-jwt": "^5.0",
+        "monolog/monolog": "^3.3",
         "symfony/yaml": "^6.0",
-        "slim/psr7": "^1.4"
+        "slim/psr7": "^1.4",
+        "tuupola/slim-jwt-auth": "^3.7"
+      
     }
 }
