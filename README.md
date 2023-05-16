@@ -6,6 +6,9 @@ This is the repository for the group project of the **"TBD"** team for WEB SERVI
 - All files (Project File, Images)
 - Documentation
 
+## [Tasks Backlog](https://github.com/users/Septer7/projects/4/views/1)
+This link contains the GitHub Project associated with our game containing the Status of all our tasks as well as the Person assigned to that specific task.
+
 ## Deployment Instructions
 1. Clone the repository folder into `htdocs` under the root folder name `vehicle-api`.
 2. Import the DB the from folder [data](/data) find `car_emissions.sql`.
