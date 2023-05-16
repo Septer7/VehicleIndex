@@ -7,6 +7,7 @@ use Vanier\Api\Controllers\CarController;
 use Vanier\Api\Controllers\EngineController;
 use Vanier\Api\Controllers\VinController;
 use Vanier\Api\Controllers\AuthenticationController;
+use Vanier\Api\Controllers\ReviewController;
 use Vanier\Api\Models\CarModel;
 
 // Import the app instance into this file's scope.
@@ -36,6 +37,11 @@ $app->get('/vin/getManufacturer/{vinNumber}', [VinController::class, 'getCarByVi
 
 $app->get('/recall/{recallID}', [RecallController::class, 'getRecall']);
 
+
+$app->get('/reviews', [ReviewController::class,'getAllReviews']);
+$app->get('/reviews/{review_id:[0-9]+}', [ReviewController::class,'getReviewById']);
+$app->get('/reviews/make/{make_name}', [ReviewController::class,'getReviewByMake']);
+$app->get('/reviews/model/{model_name}', [ReviewController::class,'getReviewByModel']);
 //Can't add another engine because I also need to assign it's FK to a car
 //$app->post('/addengine', [EngineController::class, 'addEngine']);
 
@@ -45,9 +51,12 @@ $app->post('/addcar', [CarController::class, 'addCar']);
 
 $app->delete('/deleteCar/{CarId}',[CarController::class, 'deleteCar']);
 $app->delete('/deleteEngine/{CarId}',[EngineController::class, 'deleteEngine']);
+$app->delete('/reviews', [ReviewController::class, 'handleDeleteReview']);
 
 $app->put('/updateCar/{CarId}',[CarController::class, 'updateCar']);
 $app->put('/updateEngine/{CarId}',[EngineController::class, 'updateEngine']);
+$app->put('/reviews', [ReviewController::class, 'handleUpdateReview']);
 
 $app->post('/account', [AuthenticationController::class, 'handleCreateUserAccount']);
 $app->post('/token', [AuthenticationController::class, 'handleGetToken']);
+$app->post('/reviews', [ReviewController::class, 'handleCreateReview']);

@@ -10,7 +10,7 @@ class EmissionsController {
 
     // Constructor - establishes connection to database
     public function __construct($host, $username, $password, $dbname) {
-        $this->conn = new mysqli($host, $username, $password, $dbname);
+        $this->conn = new mysql($host, $username, $password, $dbname);
         if ($this->conn->connect_error) {
             die("Connection failed: " . $this->conn->connect_error);
         }

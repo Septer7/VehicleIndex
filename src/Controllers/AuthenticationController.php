@@ -87,7 +87,7 @@ class AuthenticationController extends BaseController
             //check if the user exist already 
             $checkExistEmail = $user_model->getUserByEmail($single_user["email"]);
             if($checkExistEmail['data']){
-                $response_data = $responseCodes->makeCustomJSONError(HTTP_METHOD_NOT_ALLOWED, "Email need to be Unique");
+                $response_data = $responseCodes->makeCustomJSONError(HTTP_METHOD_NOT_ALLOWED, "Email needs to be Unique");
                 return $helperFunctions->response($response_data, HTTP_METHOD_NOT_ALLOWED, $response);
             }
 

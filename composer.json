@@ -21,7 +21,8 @@
         "monolog/monolog": "^3.3",
         "symfony/yaml": "^6.0",
         "slim/psr7": "^1.4",
-        "tuupola/slim-jwt-auth": "^3.7"
+        "tuupola/slim-jwt-auth": "^3.7",
+        "dflydev/fig-cookies": "^3.0"
       
     }
 }
