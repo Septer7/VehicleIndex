@@ -34,7 +34,7 @@ $app->add(new Tuupola\Middleware\JwtAuthentication([
         'secure' => false, // only for localhost for prod and test env set true            
         "path" => $api_base_path, // the base path of the API
         "attribute" => "decoded_token_data",
-        "ignore" => ["$api_base_path/token", "$api_base_path/account"],
+        "ignore" => [ "$api_base_path/token", "$api_base_path/account"],
         "error" => function ($response, $arguments) {
             $data["status"] = "error";
             $data["message"] = $arguments["message"];

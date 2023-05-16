@@ -27,6 +27,8 @@ class ElectricityConsumptionController {
     }
  
     public function getById($id) {
+       
+
        $query = "SELECT * FROM electricity_consumption WHERE id = $id";
        $result = $this->db->query($query);
  

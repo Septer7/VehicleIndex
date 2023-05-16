@@ -8,6 +8,10 @@ use SimpleXMLElement;
 use Slim\Factory\AppFactory;
 use Symfony\Component\Yaml\Yaml;
 use Vanier\Api\Helpers\ResponseCodes;
+use LogicException;
+use Slim\Exception\HttpForbiddenException;
+use Slim\Exception\HttpUnauthorizedException;
+use UnexpectedValueException;
 
 class HelperFunctions
 {
@@ -99,4 +103,29 @@ public function validateDate($date, $format = 'Y-m-d'){
     return $d && $d->format($format) === $date;
 }
 
+
+public function validateYear($date, $format = 'Y'){
+    $d = DateTime::createFromFormat($format, $date);
+    return $d && $d->format($format) === $date;
+}
+
+public function getCurrentUserID($request){
+    $token = $request->getHeader('Authorization')[0] ?? '';
+        //var_dump($token);exit;
+        // Parse the token: remove the "Bearer " word.
+        $parsed_token = explode(' ', $token)[1] ?? '';
+
+        try {
+            //-- 3) Try to decode the JWT token
+            $decoded_token = JWTManager::DecodeToken($parsed_token, JWTManager::SIGNATURE_ALGO);
+            //var_dump($decoded_token);exit;
+            return $decoded_token['id'];
+        } catch (LogicException $e) {
+            // Errors having to do with environmental setup or malformed JWT Keys
+            throw new HttpUnauthorizedException($request, $e->getMessage(), $e);
+        } catch (UnexpectedValueException $e) {
+            // Errors having to do with JWT signature and claims
+            throw new HttpUnauthorizedException($request, $e->getMessage(), $e);
+        }
+}
 }
