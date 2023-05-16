@@ -8,7 +8,7 @@ class CarModel extends BaseModel{
     
 
 
-private $table_name="Car_emmissions";
+private $table_name="car";
 
 public function __construct()
     {
@@ -17,9 +17,9 @@ public function __construct()
     }
 
 
-    public function getCarById(int $Car_id){
-        $sql = "Select * from $this->table_name WHERE Car_id = :Car_id";
-        return $this->run($sql,[":Car_id" => $Car_id])->fetchAll();
+    public function getCarById(int $CarId){
+        $sql = "Select * from $this->table_name WHERE CarId = :CarId";
+        return $this->run($sql,[":CarId" => $CarId])->fetchAll();
     }
 
 
@@ -28,25 +28,25 @@ public function __construct()
     {
         $filters_value = [];
 
-        //--Querries the DB and return the list of all films.
+        //--Querries the DB and return the list of all cars.
         $sql = "SELECT * FROM $this->table_name where 1";
 
         //--Filter the cars by the Make
-        if(isset ($filters["make"])){
-            $sql.="AND make like :make";
-            $filters_value[":make"]= $filters["make"]."%";
+        if(isset ($filters["Make"])){
+            $sql.="AND Make like :Make";
+            $filters_value[":Make"]= $filters["Make"]."%";
         }
 
         //--Filter the cars by the model
-        if(isset ($filters["model"])){
-            $sql.="AND model like :model";
-            $filters_value[":model"]= $filters["model"]."%";
+        if(isset ($filters["Model"])){
+            $sql.="AND Model like :Model";
+            $filters_value[":Model"]= $filters["Model"]."%";
         }
-        //year is yellow no clue why can't test yet without database
+       
         //--Filter the cars by the year
-        if(isset ($filters["year"])){
-            $sql.="AND year like :year";
-            $filters_value[":year"]= $filters["year"]."%";
+        if(isset ($filters["Year"])){
+            $sql.="AND year like :Year";
+            $filters_value[":Year"]= $filters["Year"]."%";
         }
        
 
@@ -55,6 +55,31 @@ public function __construct()
         return $this->run($sql, $filters_value)->fetchAll();
     }
 
+
+    public function insertCar(string $make, string $model, string $year)
+    {
+        $data = [
+            'Make' => $make,
+            'Model' => $model,
+            'Year' => $year
+        ];
+        return $this->insert($this->table_name, $data);
+    }
+
+
+    public function deleteCar(int $CarId)
+    {
+    return $this->delete($this->table_name, ['CarId' => $CarId]);
+    }
+
+    public function updateCar($carId, $carData)
+     {
+         
+        $where = array('CarId' => $carId); 
+        $result = $this->update($this->table_name, $carData, $where); 
+    
+        return $result; 
+    }
 
 
 
