@@ -3,9 +3,10 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 11, 2023 at 05:59 AM
+-- Generation Time: May 17, 2023 at 12:50 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.10
+
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +21,29 @@ SET time_zone = "+00:00";
 --
 -- Database: `car_emissions`
 --
+CREATE DATABASE IF NOT EXISTS `car_emissions` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `car_emissions`;
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `car`
+--
+
+DROP TABLE IF EXISTS `car`;
+CREATE TABLE `car` (
+  `CarID` int(9) NOT NULL,
+  `Make` varchar(32) NOT NULL,
+  `Model` varchar(64) NOT NULL,
+  `Year` int(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `car`
+--
+
+INSERT INTO `car` (`CarID`, `Make`, `Model`, `Year`) VALUES
+(1, 'Testoyota', 'Testamry', 2009),
+(2, 'Testissan', 'Testeaf', 2016);
 
 -- --------------------------------------------------------
 
@@ -27,6 +51,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `electricity_consumption`
 --
 
+DROP TABLE IF EXISTS `electricity_consumption`;
 CREATE TABLE `electricity_consumption` (
   `CarID` int(9) NOT NULL,
   `Econsumption_City` decimal(4,2) NOT NULL,
@@ -47,6 +72,7 @@ INSERT INTO `electricity_consumption` (`CarID`, `Econsumption_City`, `Econsumpti
 -- Table structure for table `emissions`
 --
 
+DROP TABLE IF EXISTS `emissions`;
 CREATE TABLE `emissions` (
   `CarID` int(9) NOT NULL,
   `gas_emissions` int(3) NOT NULL,
@@ -67,6 +93,7 @@ INSERT INTO `emissions` (`CarID`, `gas_emissions`, `CO2_Index`, `Smog_Index`) VA
 -- Table structure for table `engine`
 --
 
+DROP TABLE IF EXISTS `engine`;
 CREATE TABLE `engine` (
   `CarID` int(9) NOT NULL,
   `engine_size` int(3) NOT NULL,
@@ -88,6 +115,7 @@ INSERT INTO `engine` (`CarID`, `engine_size`, `HP`, `Transmission`) VALUES
 -- Table structure for table `fuel_consumption`
 --
 
+DROP TABLE IF EXISTS `fuel_consumption`;
 CREATE TABLE `fuel_consumption` (
   `CarID` int(9) NOT NULL,
   `Consumption_City` decimal(4,2) NOT NULL,
@@ -107,6 +135,7 @@ INSERT INTO `fuel_consumption` (`CarID`, `Consumption_City`, `Consumption_Hwy`) 
 -- Table structure for table `type`
 --
 
+DROP TABLE IF EXISTS `type`;
 CREATE TABLE `type` (
   `CarID` int(9) NOT NULL,
   `IsElectric` tinyint(1) DEFAULT NULL,
@@ -128,6 +157,7 @@ INSERT INTO `type` (`CarID`, `IsElectric`, `IsGas`, `size`) VALUES
 -- Table structure for table `value`
 --
 
+DROP TABLE IF EXISTS `value`;
 CREATE TABLE `value` (
   `CarID` int(9) NOT NULL,
   `Price` decimal(9,2) NOT NULL,
@@ -149,6 +179,7 @@ INSERT INTO `value` (`CarID`, `Price`, `Tax`, `Incentives`) VALUES
 -- Table structure for table `ws_log`
 --
 
+DROP TABLE IF EXISTS `ws_log`;
 CREATE TABLE `ws_log` (
   `id` int(10) UNSIGNED NOT NULL,
   `email` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
@@ -163,6 +194,7 @@ CREATE TABLE `ws_log` (
 -- Table structure for table `ws_users`
 --
 
+DROP TABLE IF EXISTS `ws_users`;
 CREATE TABLE `ws_users` (
   `user_id` int(10) UNSIGNED NOT NULL,
   `first_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
@@ -240,6 +272,13 @@ ALTER TABLE `ws_users`
 -- Constraints for dumped tables
 --
 
+--
+-- Constraints for table `car`
+--
+ALTER TABLE `car`
+  ADD PRIMARY KEY (`CarID`);
+ALTER TABLE `car`
+  MODIFY `CarID` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Constraints for table `electricity_consumption`
 --
