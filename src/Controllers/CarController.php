@@ -71,21 +71,6 @@ class CarController
         return $response->withStatus(201)->withHeader("Content-Type", "application/json");
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         // $cars = $request->getQueryParams();
         
         // try {
@@ -104,18 +89,6 @@ class CarController
         //     $response->getBody()->write(json_encode($errorResponse));
         //     return $response->withStatus(500)->withHeader("Content-Type", "application/json");
         // }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     }

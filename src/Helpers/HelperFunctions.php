@@ -102,8 +102,77 @@ public function validateDate($date, $format = 'Y-m-d'){
     $d = DateTime::createFromFormat($format, $date);
     return $d && $d->format($format) === $date;
 }
+public function validateUpdateFuel($data)
+    {
+        $rules = array(
+            'CarID' => array(
+                "required",
+                array('lengthMin', 1),
+            ),
+            'Consumption_City' => array(
+                "required",
+                array('lengthMin', 1),
+            ),
+            'Consumption_Hwy' => array(
+                "required",
+                array('lengthMin', 1),
+            )
+        );
 
+        $validator = new Validator($data);
+        $validator->mapFieldsRules($rules);
 
+        if ($validator->validate()) {
+            return true;
+        } else {
+            return $validator->errorsToJson();
+        }
+    }
+
+public function validateAddFuelConsumption($data)
+{
+
+    $rules = array(
+        'CarID' => array(
+            "required",
+            array('lengthMin', 1),
+        ),
+        'Consumption_City' => array(
+            "required",
+            array('lengthMin', 1),
+        ),
+
+        'Consumption_Hwy' => array(
+            "required",
+            array('lengthMin', 1),
+        ),
+    );
+
+    $validator = new Validator($data);
+    $validator->mapFieldsRules($rules);
+    if ($validator->validate()) {
+        return true;
+    } else {
+        return $validator->errorsToJson();
+    }
+
+}
+public function validateDeleteFuelConsumption($carId)
+    {
+
+        $rules = array('CarID' => array("required", array('lengthmin',1)));
+
+        $validator = new Validator($carId);
+        $validator->mapFieldsRules($rules);
+        if ($validator->validate()) {
+            return true;
+        } else {
+            return $validator->errorsToJson();
+        }
+        
+        
+       
+    }
 public function validateYear($date, $format = 'Y'){
     $d = DateTime::createFromFormat($format, $date);
     return $d && $d->format($format) === $date;
