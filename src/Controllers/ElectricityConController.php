@@ -5,7 +5,7 @@ namespace Vanier\Api\Controllers;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpBadRequestException;
-use Vanier\Api\Models\ElectrictyConModel;
+use Vanier\Api\Models\ElectricityConModel;
 use Vanier\Api\Helpers\HelperFunctions;
 
 
@@ -24,7 +24,7 @@ class ElectricityConController
 
         $carId = $args['id'];
 
-        $ElectricityConModel = new ElectrictyConModel();
+        $ElectricityConModel = new ElectricityConModel();
         $data = $ElectricityConModel->getCarById((int) $carID);
         
         $helperFunctions = new HelperFunctions();
@@ -65,7 +65,7 @@ class ElectricityConController
         $consumption_City = $params['Consumption_City'];
         $consumption_Hwy = $params['Consumption_Hwy'];
 
-        $ElectricityConModel = new ElectrictyConModel();
+        $ElectricityConModel = new ElectricityConModel();
         
         $ElectricityConModel->insertFuelConsumption($carId,$consumption_City,$consumption_Hwy);
 
