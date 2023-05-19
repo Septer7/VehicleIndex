@@ -5,6 +5,7 @@ namespace Vanier\Api\Controllers;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Vanier\Api\Models\CarModel;
+use  Vanier\Api\Helpers\Validator;
 
 
 class CarController
@@ -24,6 +25,30 @@ class CarController
         $json_data = json_encode($data);
         $response->getBody()->write($json_data);
         return $response->withStatus(201)->withHeader("Content-Type", "application/json");
+
+        // $carId = $args['id'];
+        
+        // try {
+        //     $data = $this->carModel->getCarById((int)$carId);
+        //     if ($data === false) {
+        //         throw new \Exception('Car not found');
+        //     }
+            
+        //     $json_data = json_encode($data);
+        //     $response->getBody()->write($json_data);
+        //     return $response->withStatus(200)->withHeader("Content-Type", "application/json");
+        // } catch (\Exception $ex) {
+        //     $errorResponse = [
+        //         'error' => 'Car not found',
+        //         'message' => $ex->getMessage()
+        //     ];
+            
+        //     $response->getBody()->write(json_encode($errorResponse));
+        //     return $response->withStatus(404)->withHeader("Content-Type", "application/json");
+        // }
+
+
+
     }
     
 
@@ -41,23 +66,112 @@ class CarController
         $json_data= json_encode($data);
 
         //-- We need to prepare the response 
-        // $response->getBody()->write("List all the films");
         $response->getBody()->write($json_data);
 
         return $response->withStatus(201)->withHeader("Content-Type", "application/json");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // $cars = $request->getQueryParams();
+        
+        // try {
+        //     $carModel = new CarModel();
+        //     $data = $carModel->getAll($cars);
+        //     $json_data = json_encode($data);
+            
+        //     $response->getBody()->write($json_data);
+        //     return $response->withStatus(200)->withHeader("Content-Type", "application/json");
+        // } catch (\Exception $e) {
+        //     $errorResponse = [
+        //         'error' => 'Internal Server Error',
+        //         'message' => $e->getMessage()
+        //     ];
+            
+        //     $response->getBody()->write(json_encode($errorResponse));
+        //     return $response->withStatus(500)->withHeader("Content-Type", "application/json");
+        // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
     public function addCar(Request $request, Response $response)
     {
     $params = $request->getParsedBody();
-    $year = $params['year'];
+    
     $make = $params['make'];
     $model = $params['model'];
+    $year = $params['year'];
     
     $car_model = new CarModel();
-    $car_model->insertCar($year, $make, $model);
+    $car_model->insertCar($make, $model,$year);
     
     $response->getBody()->write("New car added successfully");
     return $response;
+
+
+
+
+    
+    // $params = $request->getParsedBody();
+        
+    // // Validate the input data using the Validator
+    // $validator = new Validator();
+    // $validationResult = $validator->validate($params);
+    
+    // if (!$validationResult['valid']) {
+    //     // Return a response with validation errors
+    //     $errorResponse = [
+    //         'error' => 'Invalid input',
+    //         'validation_errors' => $validationResult['errors']
+    //     ];
+        
+    //     $response->getBody()->write(json_encode($errorResponse));
+    //     return $response->withStatus(400)->withHeader("Content-Type", "application/json");
+    // }
+    
+    // // Proceed with adding the car to the database
+    // $year = $params['year'];
+    // $make = $params['make'];
+    // $model = $params['model'];
+    
+    // try {
+    //     $this->carModel->insertCar($year, $make, $model);
+    //     $response->getBody()->write("New car added successfully");
+    //     return $response->withStatus(201);
+    // } catch (\Exception $e) {
+    //     $errorResponse = [
+    //         'error' => 'Internal Server Error',
+    //         'message' => $e->getMessage()
+    //     ];
+        
+    //     $response->getBody()->write(json_encode($errorResponse));
+    //     return $response->withStatus(500)->withHeader("Content-Type", "application/json");
+    //  }
     }
 
     
@@ -85,21 +199,58 @@ class CarController
             // Return a JSON response with the status code and message
         $response->getBody()->write(json_encode(['message' => $message]));
          return $response->withHeader('Content-Type', 'application/json')->withStatus($statusCode);
-    }
-    // public function update($id, $name) {
-    //     $sql = "UPDATE car SET name = :name WHERE id = :id";
-    //     $stmt = $this->db->prepare($sql);
-    //     $stmt->bindParam(':id', $id);
-    //     $stmt->bindParam(':name', $name);
-    //     return $stmt->execute();
-    // }
 
-    // public function delete($id) {
-    //     $sql = "DELETE FROM type WHERE id = :id";
-    //     $stmt = $this->db->prepare($sql);
-    //     $stmt->bindParam(':id', $id);
-    //     return $stmt->execute();
-    //   }
+
+
+
+        //  $carId = $args['CarId'];
+        
+        //  try {
+        //      $deletedRows = $this->carModel->deleteCar((int)$carId);
+             
+        //      if ($deletedRows === 0) {
+        //          $errorResponse = [
+        //              'error' => 'Car not found',
+        //              'message' => 'Car not found or already deleted'
+        //          ];
+                 
+        //          $response->getBody()->write(json_encode($errorResponse));
+        //          return $response->withStatus(404)->withHeader("Content-Type", "application/json");
+        //      }
+             
+        //      $response->getBody()->write("Car deleted successfully");
+        //      return $response->withStatus(200);
+        //  } catch (\Exception $e) {
+        //      $errorResponse = [
+        //          'error' => 'Internal Server Error',
+        //          'message' => $e->getMessage()
+        //      ];
+             
+        //      $response->getBody()->write(json_encode($errorResponse));
+        //      return $response->withStatus(500)->withHeader("Content-Type", "application/json");
+        //  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+    
 
     public function updateCar(Request $request, Response $response, array $args)
     {
@@ -129,6 +280,58 @@ class CarController
         // Return a JSON response with the status code and message
          $response->getBody()->write(json_encode(['message' => $message]));
          return $response->withHeader('Content-Type', 'application/json')->withStatus($statusCode);
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //  $carId = $args['CarId'];
+        // $carData = $request->getParsedBody();
+        
+        // try {
+        //     $result = $this->carModel->updateCar($carId, $carData);
+            
+        //     if ($result === 0) {
+        //         $errorResponse = [
+        //             'error' => 'Car not found',
+        //             'message' => 'Car not found or update failed'
+        //         ];
+                
+        //         $response->getBody()->write(json_encode($errorResponse));
+        //         return $response->withStatus(404)->withHeader("Content-Type", "application/json");
+        //     }
+            
+        //     $response->getBody()->write("Car updated successfully");
+        //     return $response->withStatus(200);
+        // } catch (\Exception $e) {
+        //     $errorResponse = [
+        //         'error' => 'Internal Server Error',
+        //         'message' => $e->getMessage()
+        //     ];
+            
+        //     $response->getBody()->write(json_encode($errorResponse));
+        //     return $response->withStatus(500)->withHeader("Content-Type", "application/json");
+        // }
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
 
