@@ -43,15 +43,7 @@ CREATE TABLE `car` (
 
 INSERT INTO `car` (`CarID`, `Make`, `Model`, `Year`) VALUES
 (1, 'Testoyota', 'Testamry', 2009),
-(2, 'Testissan', 'Testeaf', 2016),
-(3, 'Acura', 'Integra', 2023),
-(4, 'Alfa Romeo', 'Giulia', 2023),
-(5, 'Cadillac', 'Escalade 4WD', 2023),
-(6, 'Maserati', 'Levante GT', 2023),
-(7, 'Mitsubishi', 'i-MiEV', 2012),
-(8, 'Ford', 'Focus Electric', 2013),
-(9, 'Tesla', 'Model S', 2013),
-(10, 'Smart', 'Fortwo Electric', 2014);
+(2, 'Testissan', 'Testeaf', 2016);
 
 -- --------------------------------------------------------
 
@@ -72,11 +64,7 @@ CREATE TABLE `electricity_consumption` (
 --
 
 INSERT INTO `electricity_consumption` (`CarID`, `Econsumption_City`, `Econsumption_Hwy`, `VehicleRange`) VALUES
-(2, '2.40', '1.40', 999),
-(7, '2.40', '1.90', 100),
-(8, '2.40', '2.1', 122),
-(9, '2.70', '2.60', 426),
-(10, '2.50', '2.2', 109);
+(2, '2.40', '1.40', 999);
 
 -- --------------------------------------------------------
 
@@ -97,11 +85,7 @@ CREATE TABLE `emissions` (
 --
 
 INSERT INTO `emissions` (`CarID`, `gas_emissions`, `CO2_Index`, `Smog_Index`) VALUES
-(1, 200, 2, 4),
-(3, 167, 6, 7),
-(4, 205, 5, 5),
-(5, 281, 4, 3),
-(6, 308, 4, 3);
+(1, 200, 2, 4);
 
 -- --------------------------------------------------------
 
@@ -123,15 +107,7 @@ CREATE TABLE `engine` (
 
 INSERT INTO `engine` (`CarID`, `engine_size`, `HP`, `Transmission`) VALUES
 (1, 200, 1, 'TEST'),
-(2, 100, 2, '123A'),
-(3, 100, 3, 'AV7'),
-(4, 100, 4, 'A8'),
-(5, 100, 5, 'A10'),
-(6, 100, 6, 'A8'),
-(7, 100, 7, 'A1'),
-(8, 100, 8, 'A1'),
-(9, 100, 9, 'A1'),
-(10, 100, 10, 'A1'),
+(2, 100, 2, '123A');
 
 -- --------------------------------------------------------
 
@@ -151,11 +127,7 @@ CREATE TABLE `fuel_consumption` (
 --
 
 INSERT INTO `fuel_consumption` (`CarID`, `Consumption_City`, `Consumption_Hwy`) VALUES
-(1, '1.20', '10.99'),
-(3, '7.90', '6.30'),
-(4, '10.00', '7.2'),
-(5, '11.70', '9.00'),
-(6, '15.1', '10.90'),
+(1, '1.20', '10.99');
 
 -- --------------------------------------------------------
 
@@ -177,15 +149,7 @@ CREATE TABLE `type` (
 
 INSERT INTO `type` (`CarID`, `IsElectric`, `IsGas`, `size`) VALUES
 (1, 0, 1, 'Big'),
-(2, 1, 0, 'Tiny'),
-(3, 0, 1, 'Full-Size'),
-(4, 0, 1, 'Mid-Size'),
-(5, 0, 1, 'SUV: Standard'),
-(6, 0, 1, 'SUV: Standard'),
-(7, 1, 0, 'Subcompact'),
-(8, 1, 0, 'Compact'),
-(9, 1, 0, 'Full-Size'),
-(10, 1, 0, 'Two-Seater');
+(2, 1, 0, 'Tiny');
 
 -- --------------------------------------------------------
 
@@ -207,15 +171,7 @@ CREATE TABLE `value` (
 
 INSERT INTO `value` (`CarID`, `Price`, `Tax`, `Incentives`) VALUES
 (1, '12000.95', '25.00', NULL),
-(2, '25000.99', '30.00', '5000.00')
-(3, '31300.00', '25.00', NULL),
-(4, '84500.00', '25.00', NULL),
-(5, '105200.00', '25.00', NULL),
-(6, '90700.00', '25.00', NULL),
-(7, '23845.00', '25.00', '1000000.00'),
-(8, '23995.00', '25.00', '3000'),
-(9, '148,990.00', '25.00', '6000'),
-(10, '8988.00', '25.00', '99999999.99');
+(2, '25000.99', '30.00', '5000.00');
 
 -- --------------------------------------------------------
 

@@ -153,14 +153,7 @@ class EmissionsController extends BaseController {
             return $helperFunctions->response($response_data, HTTP_METHOD_NOT_ALLOWED, $response);
         }
 
-        // 6) Check if user is authorized
-        $user_id = $helperFunctions->getCurrentUserID($request);
-        if(!isset($user_id)){
-            $response_data = $responseCodes->makeCustomJSONError(HTTP_METHOD_NOT_ALLOWED, " You are not authorized..");
-            return $helperFunctions->response($response_data, HTTP_METHOD_NOT_ALLOWED, $response);
-        }
-
-        // 7) Create updated record
+        // 6) Create updated record
         $emissions_model = new EmissionsModel();
         $CarID = $emissions_params['CarID'];
         $update_emissions_record = array(
@@ -168,7 +161,6 @@ class EmissionsController extends BaseController {
             "CO2_Index" => $emissions_params['CO2_Index'],
             "Smog_Index" => $emissions_params['Smog_Index'],
         );
-
         $emissions_model->updateEmissions($update_emissions_record,$CarID); 
         $response->getBody()->write(json_encode("Emissions ".$CarID." Successfully Updated."));
         return $response->withStatus(HTTP_OK);
@@ -206,15 +198,8 @@ class EmissionsController extends BaseController {
             $response_data = $responseCodes->makeCustomJSONError(HTTP_METHOD_NOT_ALLOWED, " Car not found in our records.");
             return $helperFunctions->response($response_data, HTTP_METHOD_NOT_ALLOWED, $response);
         }
-
-        // 6) Check if user is authorized
-        $user_id = $helperFunctions->getCurrentUserID($request);
-        if(!isset($user_id)){
-            $response_data = $responseCodes->makeCustomJSONError(HTTP_METHOD_NOT_ALLOWED, " You are not authorized..");
-            return $helperFunctions->response($response_data, HTTP_METHOD_NOT_ALLOWED, $response);
-        }
       
-        // 7) Delete Record
+        // 6) Delete Record
         $emissions = $emissions_model->getEmissionsById($emissions_params['CarID']);   
         $CarID = $emissions_params['CarID'];
         $emissions_model->deleteEmission($CarID); 

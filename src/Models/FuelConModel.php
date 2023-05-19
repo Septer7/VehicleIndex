@@ -8,83 +8,73 @@ class FuelConModel extends BaseModel{
     
 
 
-private $table_name="Fuel_Consumption";
+private $table_name="fuel_consumption";
 
 public function __construct()
-{
+    {
     
         parent::__construct();
-}
+    }
 
 
-    private $id;
-    private $vehicle_id;
-    private $fuel_type_id;
-    private $fuel_quantity;
-    private $distance_travelled;
-    private $created_at;
-  
-    public function __construct($id, $vehicle_id, $fuel_type_id, $fuel_quantity, $distance_travelled, $created_at) {
-      $this->id = $id;
-      $this->vehicle_id = $vehicle_id;
-      $this->fuel_type_id = $fuel_type_id;
-      $this->fuel_quantity = $fuel_quantity;
-      $this->distance_travelled = $distance_travelled;
-      $this->created_at = $created_at;
+    public function getCarById(int $carID){
+        $sql = "Select * from $this->table_name WHERE   CarID = :carID";
+        return $this->run($sql,[":carID" => $carID])->fetchAll();
     }
-  
-    // getters and setters for all properties
-    public function getId() {
-      return $this->id;
-    }
-  
-    public function setId($id) {
-      $this->id = $id;
-    }
-  
-    public function getVehicleId() {
-      return $this->vehicle_id;
-    }
-  
-    public function setVehicleId($vehicle_id) {
-      $this->vehicle_id = $vehicle_id;
-    }
-  
-    public function getFuelTypeId() {
-      return $this->fuel_type_id;
-    }
-  
-    public function setFuelTypeId($fuel_type_id) {
-      $this->fuel_type_id = $fuel_type_id;
-    }
-  
-    public function getFuelQuantity() {
-      return $this->fuel_quantity;
-    }
-  
-    public function setFuelQuantity($fuel_quantity) {
-      $this->fuel_quantity = $fuel_quantity;
-    }
-  
-    public function getDistanceTravelled() {
-      return $this->distance_travelled;
-    }
-  
-    public function setDistanceTravelled($distance_travelled) {
-      $this->distance_travelled = $distance_travelled;
-    }
-  
-    public function getCreatedAt() {
-      return $this->created_at;
-    }
-  
-    public function setCreatedAt($created_at) {
-      $this->created_at = $created_at;
-    }    
 
 
+    //Returns all fuel consumption 
+    public function getAll(array $filters = [])
+    {
+        $filters_value = [];
+
+        //--Querries the DB and return the list of all films.
+        $sql = "SELECT * FROM $this->table_name where 1";
+
+        //--Filter the cars by the Make
+        if(isset ($filters["consumption_city"])){
+            $sql.="AND consumption_city like :consumption_city";
+            $filters_value[":consumption_city"]= $filters["consumption_city"]."%";
+        }
+
+        //--Filter the cars by the consumption_hwy
+        if(isset ($filters["consumption_hwy"])){
+            $sql.="AND consumption_hwy like :consumption_hwy";
+            $filters_value[":consumption_hwy"]= $filters["consumption_hwy"]."%";
+        }
+       
+      
+
+        return $this->run($sql, $filters_value)->fetchAll();
+    }
+    public function insertFuelConsumption(int $carId, int $consumption_City,int $consumption_Hwy )
+    {
+        $data = [
+            'CarID' => $carId,
+            'Consumption_City' => $consumption_City,
+            'Consumption_Hwy' => $consumption_Hwy
+        ];
+        return $this->insert($this->table_name, $data);
+    }
 
 
+    function getCarID($year,$make,$consumption_hwy){
+        $sql = "SELECT car_id FROM $this->table_name WHERE year LIKE :year AND make LIKE :make AND consumption_hwy LIKE :consumption_hwy ";
+        $result = $this->run($sql, [":year" => $year ,":make"=> "%" .$make. "%", ":consumption_hwy" => "%" . $consumption_hwy . "%"])->fetch();
+        return $result;
+    }
+    
+    public function deleteFuel(int $CarId)
+    {
+    return $this->delete($this->table_name, ['CarID' => $CarId]);
+    }
 
-
+    public function updateFuel($carId, $carData)
+     {
+         
+        $where = array('CarID' => $carId); 
+        $result = $this->update($this->table_name, $carData, $where); 
+    
+        return $result; 
+    }
 }

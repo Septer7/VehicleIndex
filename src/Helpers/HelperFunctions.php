@@ -102,8 +102,77 @@ public function validateDate($date, $format = 'Y-m-d'){
     $d = DateTime::createFromFormat($format, $date);
     return $d && $d->format($format) === $date;
 }
+public function validateUpdateFuel($data)
+    {
+        $rules = array(
+            'CarID' => array(
+                "required",
+                array('lengthMin', 1),
+            ),
+            'Consumption_City' => array(
+                "required",
+                array('lengthMin', 1),
+            ),
+            'Consumption_Hwy' => array(
+                "required",
+                array('lengthMin', 1),
+            )
+        );
 
+        $validator = new Validator($data);
+        $validator->mapFieldsRules($rules);
 
+        if ($validator->validate()) {
+            return true;
+        } else {
+            return $validator->errorsToJson();
+        }
+    }
+
+public function validateAddFuelConsumption($data)
+{
+
+    $rules = array(
+        'CarID' => array(
+            "required",
+            array('lengthMin', 1),
+        ),
+        'Consumption_City' => array(
+            "required",
+            array('lengthMin', 1),
+        ),
+
+        'Consumption_Hwy' => array(
+            "required",
+            array('lengthMin', 1),
+        ),
+    );
+
+    $validator = new Validator($data);
+    $validator->mapFieldsRules($rules);
+    if ($validator->validate()) {
+        return true;
+    } else {
+        return $validator->errorsToJson();
+    }
+
+}
+public function validateDeleteFuelConsumption($carId)
+    {
+
+        $rules = array('CarID' => array("required", array('lengthmin',1)));
+
+        $validator = new Validator($carId);
+        $validator->mapFieldsRules($rules);
+        if ($validator->validate()) {
+            return true;
+        } else {
+            return $validator->errorsToJson();
+        }
+        
+        
+       
+    }
 public function validateYear($date, $format = 'Y'){
     $d = DateTime::createFromFormat($format, $date);
     return $d && $d->format($format) === $date;
@@ -127,178 +196,5 @@ public function getCurrentUserID($request){
             // Errors having to do with JWT signature and claims
             throw new HttpUnauthorizedException($request, $e->getMessage(), $e);
         }
-}
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-public function validateAddCar($data)
-{
-
-    $rules = array(
-        'year' => array(
-            "required",
-            array('lengthMin', 4),
-        ),
-        'make' => array(
-            "required",
-            array('lengthMin', 3),
-        ),
-
-        'model' => array(
-            "required",
-            array('lengthMin', 3),
-        ),
-    );
-
-    $validator = new Validator($data);
-    $validator->mapFieldsRules($rules);
-    if ($validator->validate()) {
-        return true;
-    } else {
-        return $validator->errorsToJson();
-    }
-
-}
-
-
-
-
-public function validateDeleteCar($carId)
-    {
-        
-
-        $rules = array('CarId' => array("required", array('lengthmin',1)));
-
-        $validator = new Validator($carId);
-        $validator->mapFieldsRules($rules);
-        if ($validator->validate()) {
-            return true;
-        } else {
-            return $validator->errorsToJson();
-        }
-        
-        
-       
-    }
-
-
-
-
-
-
-    public function validateUpdateCar($data)
-    {
-        $rules = array(
-            'CarId' => array(
-                "required",
-                array('lengthMin', 1),
-            ),
-            'year' => array(
-                "required",
-                array('lengthMin', 4),
-            ),
-            'make' => array(
-                "required",
-                array('lengthMin', 3),
-            ),
-    
-            'model' => array(
-                "required",
-                array('lengthMin', 3),
-            ),
-        );
-        $validator = new Validator($data);
-        $validator->mapFieldsRules($rules);
-
-        if ($validator->validate()) {
-            return true;
-        } else {
-            return $validator->errorsToJson();
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-//engine Validate
-
-
-
-
-
-
-    public function validateAddEngine($data)
-    {
-    
-        $rules = array(
-            'engine_size' => array(
-                "required",
-                array('lengthMin', 1),
-            ),
-            'HP' => array(
-                "required",
-                array('lengthMin', 1),
-            ),
-    
-            'Transmission' => array(
-                "required",
-                array('lengthMin', 1),
-            ),
-        );
-    
-        $validator = new Validator($data);
-        $validator->mapFieldsRules($rules);
-        if ($validator->validate()) {
-            return true;
-        } else {
-            return $validator->errorsToJson();
-        }
-    
-    }
-
-
-
-
-
-
-public function validateUpdateEngine($data)
-{
-//     $rules
-
-//     $validator = new Validator($data);
-//     $validator->mapFieldsRules($rules);
-
-//     if ($validator->validate()) {
-//         return true;
-//     } else {
-//         return $validator->errorsToJson();
-//     }
-}
-
-
-
-
-
-
-
-
 }
 }
