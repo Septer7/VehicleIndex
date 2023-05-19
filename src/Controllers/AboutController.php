@@ -29,15 +29,22 @@ class AboutController extends BaseController
         $exposed_resources['PUT  | Update a Review'] = '/reviews';
         $exposed_resources['DELETE  | Delete a Review'] = '/reviews';
         
-        $exposed_resources['GET  | GET ALL CARS'] = '/cars';
-        $exposed_resources['GET  | GET car by id'] = '/car/{id}|';
+        
+        $exposed_resources['GET  | Get All Cars'] = '/cars';
+        $exposed_resources['GET  | Get A Car'] = '/car/{CarId}';
+        $exposed_resources['POST | Add a Car'] = '/addcar';
+        $exposed_resources['PUT  | Update a Car'] = '/updateCar/{CarId}';
+        $exposed_resources['DELETE  | Delete a Car'] = '/deleteCar/{CarId}';
 
-        $exposed_resources['GET  | GET ALL CARS'] = '/cars';
-        $exposed_resources['GET  | GET car by id'] = '/car/{id}|';
-        $exposed_resources['POST  | Insert car'] = '/addcar';
-        $exposed_resources['DELETE  | delete car'] = 'deleteCar/{CarId}';
-        $exposed_resources['UPDATE  | update car'] = 'updateCar/{CarId}';
 
+        $exposed_resources['GET  | Get All Engines'] = '/engines';
+        $exposed_resources['GET  | Get an Engine'] = '/enigne/{CarId}';
+        $exposed_resources['PUT  | Update an Engine'] = '/updateEngine/{CarId}';
+        $exposed_resources['DELETE  | Delete an Engine'] = '/deleteEngine/{CarId}';
+        
+        
+        
+        
         // $exposed_resources['GET | All Cars'] = '/cars';
         // $exposed_resources['GET | All Cars Makes'] = '/cars/makes';
         // $exposed_resources['GET | All Models by Make'] = '/cars/make/{make_name}';
