@@ -40,6 +40,12 @@ $app->get('/recall/{recallID}', [RecallController::class, 'getRecall']);
 $app->get('/emissions', [EmissionsController::class, 'getAllEmissions']);
 $app->get('/emission/{CarID}', [EmissionsController::class, 'getEmissionsById']);
 
+$app->get('/values', [ValueController::class, 'getAllValue']);
+$app->get('/value/{CarID}', [ValueController::class, 'getValueById']);
+
+$app->get('/types', [TypeController::class, 'getAllTypes']);
+$app->get('/type/{CarID}', [TypeController::class, 'getTypesById']);
+
 
 $app->get('/reviews', [ReviewController::class,'getAllReviews']);
 $app->get('/reviews/{review_id:[0-9]+}', [ReviewController::class,'getReviewById']);
