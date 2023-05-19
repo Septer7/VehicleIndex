@@ -56,7 +56,7 @@ public function __construct()
     }
 
 
-    public function insertCar(string $make, string $model, int $year)
+    public function insertCar(string $make, string $model, string $year)
     {
         $data = [
             'Make' => $make,
