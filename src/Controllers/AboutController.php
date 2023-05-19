@@ -38,6 +38,11 @@ class AboutController extends BaseController
         $exposed_resources['DELETE  | delete car'] = 'deleteCar/{CarId}';
         $exposed_resources['UPDATE  | update car'] = 'updateCar/{CarId}';
 
+        $exposed_resources['GET  | GET ALL ENGINES'] = '/engines';
+        $exposed_resources['GET  | GET engine by id'] = '/engine/{id}|';
+        $exposed_resources['DELETE  | delete engine'] = 'deleteEngine/{EngineId}';
+        $exposed_resources['UPDATE  | update engine'] = 'updateEngine/{EngineId}';
+
         // $exposed_resources['GET | All Cars'] = '/cars';
         // $exposed_resources['GET | All Cars Makes'] = '/cars/makes';
         // $exposed_resources['GET | All Models by Make'] = '/cars/make/{make_name}';

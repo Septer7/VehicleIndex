@@ -38,15 +38,6 @@ $app->get('/vin/getManufacturer/{vinNumber}', [VinController::class, 'getCarByVi
 
 $app->get('/recall/{recallID}', [RecallController::class, 'getRecall']);
 
-$app->get('/emissions', [EmissionsController::class, 'getAllEmissions']);
-$app->get('/emission/{CarID}', [EmissionsController::class, 'getEmissionsById']);
-
-$app->get('/values', [ValueController::class, 'getAllValue']);
-$app->get('/value/{CarID}', [ValueController::class, 'getValueById']);
-
-$app->get('/types', [TypeController::class, 'getAllTypes']);
-$app->get('/type/{CarID}', [TypeController::class, 'getTypesById']);
-
 
 $app->get('/reviews', [ReviewController::class,'getAllReviews']);
 $app->get('/reviews/{review_id:[0-9]+}', [ReviewController::class,'getReviewById']);
@@ -62,19 +53,22 @@ $app->get('/fuel_consumption/{id}', [FuelConController::class,'getCarId']);
 $app->post('/addcar', [CarController::class, 'addCar']);
 $app->post('/addFuelConsumption', [FuelConController::class, 'addFuelConsumption']);
 
+
 $app->delete('/deleteCar/{CarId}',[CarController::class, 'deleteCar']);
 $app->delete('/deleteEngine/{CarId}',[EngineController::class, 'deleteEngine']);
 $app->delete('/reviews', [ReviewController::class, 'handleDeleteReview']);
+<<<<<<< Updated upstream
 $app->delete('/emissions', [ReviewController::class, 'handleDeleteEmissions']);
 $app->delete('/deletefuelConsumption/{CarID}', [FuelConController::class, 'deleteFuelConsumption']);
+=======
+>>>>>>> Stashed changes
 
 $app->put('/updateCar/{CarId}',[CarController::class, 'updateCar']);
 $app->put('/updateFuel/{CarId}',[FuelConController::class, 'updateFuelConsumption']);
 $app->put('/updateEngine/{CarId}',[EngineController::class, 'updateEngine']);
 $app->put('/reviews', [ReviewController::class, 'handleUpdateReview']);
-$app->put('/emissions', [ReviewController::class, 'handleUpdateEmissions']);
 
 $app->post('/account', [AuthenticationController::class, 'handleCreateUserAccount']);
 $app->post('/token', [AuthenticationController::class, 'handleGetToken']);
 $app->post('/reviews', [ReviewController::class, 'handleCreateReview']);
-$app->post('/emissions', [CarController::class, 'handleCreateEmission']);
+

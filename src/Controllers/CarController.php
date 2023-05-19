@@ -94,6 +94,35 @@ class CarController
     }
     public function addCar(Request $request, Response $response)
     {
+        
+        $params = $request->getParsedBody();
+
+        $helperFunctions = new HelperFunctions();
+
+
+
+
+        $validate = $helperFunctions->validateAddCar($params);
+
+        if ($validate === "true") {
+            $year = $params['year'];
+            $make = $params['make'];
+            $model = $params['model'];
+
+
+            $car_model = new CarModel();
+            $car_model->insertCar($year, $make, $model);
+
+            $response->getBody()->write("New car added successfully");
+            return $response;
+
+        } else {
+
+            $response->getBody()->write($validate);
+            return $response;
+
+        }    
+    
     $params = $request->getParsedBody();
     
     $make = $params['make'];
