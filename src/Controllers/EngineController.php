@@ -5,7 +5,7 @@ namespace Vanier\Api\Controllers;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Vanier\Api\Models\EngineModel;
-
+use  Vanier\Api\Helpers\Validator;
 class EngineController
 {
     
@@ -32,6 +32,8 @@ class EngineController
 
     public function getAllEngine(Request $request, Response $response)
     {
+
+        // /*
         //--step 1) get the querry params from the request
         $engine = $request->getQueryParams();
         
@@ -39,15 +41,39 @@ class EngineController
         //new instance of the model 
         $engine_model = new EngineModel();
 
-        //fetch a list of films
+        // //fetch a list of films
         $data= $engine_model->getAll($engine);
         $json_data= json_encode($data);
 
         //-- We need to prepare the response 
-        // $response->getBody()->write("List all the films");
         $response->getBody()->write($json_data);
 
         return $response->withStatus(201)->withHeader("Content-Type", "application/json");
+        /*
+        $engine = $request->getQueryParams();
+
+
+        $validator = new Validator();
+        $validationResult = $validator->validate($engine);
+
+        if (!$validationResult['valid']) {
+            $errorResponse = [
+                'error' => 'Invalid input',
+                'validation_errors' => $validationResult['errors']
+            ];
+
+            $response->getBody()->write(json_encode($errorResponse));
+            return $response->withStatus(400)->withHeader("Content-Type", "application/json");
+        }
+
+        $engine_model = new EngineModel();
+        $data = $engine_model->getAll($engine);
+        $json_data = json_encode($data);
+
+        $response->getBody()->write($json_data);
+        return $response->withStatus(201)->withHeader("Content-Type", "application/json");*/
+
+        
     }
 
     public function addEngine(Request $request, Response $response)
