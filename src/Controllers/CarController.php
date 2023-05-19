@@ -4,7 +4,9 @@ namespace Vanier\Api\Controllers;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Exception\HttpBadRequestException;
 use Vanier\Api\Models\CarModel;
+use Vanier\Api\Helpers\HelperFunctions;
 
 
 class CarController
@@ -18,12 +20,15 @@ class CarController
 
     public function getCar(Request $request, Response  $response, array $args)
     {
+        
+
         $carId = $args['id'];
-        $carModel = new CarModel();  
-        $data = $carModel->getCarById((int)$carId); 
-        $json_data = json_encode($data);
-        $response->getBody()->write($json_data);
-        return $response->withStatus(201)->withHeader("Content-Type", "application/json");
+
+        $carModel = new CarModel();
+        $data = $carModel->getCarById((int) $carId);
+
+        $helperFunctions = new HelperFunctions();
+        return $helperFunctions->checkData($data, $response, $request);
     }
     
 
@@ -48,64 +53,100 @@ class CarController
     }
     public function addCar(Request $request, Response $response)
     {
+    // $params = $request->getParsedBody();
+    // $year = $params['year'];
+    // $make = $params['make'];
+    // $model = $params['model'];
+    
+    // $car_model = new CarModel();
+    // $car_model->insertCar($year, $make, $model);
+    
+    // $response->getBody()->write("New car added successfully");
+    // return $response;
     $params = $request->getParsedBody();
-    $year = $params['year'];
-    $make = $params['make'];
-    $model = $params['model'];
-    
-    $car_model = new CarModel();
-    $car_model->insertCar($year, $make, $model);
-    
-    $response->getBody()->write("New car added successfully");
-    return $response;
+
+    $helperFunctions = new HelperFunctions();
+
+
+
+
+    $validate = $helperFunctions->validateAddCar($params);
+
+    if ($validate === true) {
+        $year = $params['year'];
+        $make = $params['make'];
+        $model = $params['model'];
+
+
+        $car_model = new CarModel();
+        $car_model->insertCar($make, $model, $year);
+
+        $response->getBody()->write("New car added successfully");
+        return $response;
+
+    } else {
+
+        var_dump($validate); exit;
+        $response->getBody()->write($validate);
+        return $response;
+
+    }
+
+
     }
 
     
      
     public function deleteCar($request, $response, $args)
     {
-        $CarId = $args['CarId'];
-        
-            // Get the CarModel instance
-        $carModel = new CarModel();
-        
-            // Call the deleteCar method to delete the car
-        $deletedRows = $carModel->deleteCar($CarId);
-        
-        if ($deletedRows === 0) {
-                // No car was deleted
-            $message = 'Car not found';
-            $statusCode = 404;
-        } else {
-                // Car was deleted successfully
-            $message = 'Car deleted successfully';
-            $statusCode = 200;
-        }
-        
-            // Return a JSON response with the status code and message
-        $response->getBody()->write(json_encode(['message' => $message]));
-         return $response->withHeader('Content-Type', 'application/json')->withStatus($statusCode);
-    }
-    // public function update($id, $name) {
-    //     $sql = "UPDATE car SET name = :name WHERE id = :id";
-    //     $stmt = $this->db->prepare($sql);
-    //     $stmt->bindParam(':id', $id);
-    //     $stmt->bindParam(':name', $name);
-    //     return $stmt->execute();
-    // }
+       
 
-    // public function delete($id) {
-    //     $sql = "DELETE FROM type WHERE id = :id";
-    //     $stmt = $this->db->prepare($sql);
-    //     $stmt->bindParam(':id', $id);
-    //     return $stmt->execute();
-    //   }
+
+        $carId = $args['CarId'];
+
+         $helperFunctions = new HelperFunctions();
+         $validate = $helperFunctions->validateDeleteCar($carId);
+        
+         if ($validate === true) {
+            $carModel = new CarModel();
+            $deletedRows = $carModel->deleteCar($carId);
+        
+            if ($deletedRows === 0) {
+                $message = 'Car not found';
+                $statusCode = 404;
+            } else {
+                $message = 'Car deleted successfully';
+                $statusCode = 200;
+            }
+        
+            $response->getBody()->write(json_encode(['message' => $message]));
+            return $response->withHeader('Content-Type', 'application/json')->withStatus($statusCode);
+         } else {
+             $response->getBody()->write($validate);
+             return $response;
+         }
+
+
+
+
+        
+
+    }
+ 
 
     public function updateCar(Request $request, Response $response, array $args)
     {
         // Get the ID of the car to update
-         $carId = $args['CarId'];
 
+
+
+         $carId = $args['CarId'];
+         $helperFunctions = new HelperFunctions();
+         $validate = $helperFunctions->validateUpdateCar($carId);
+
+
+         
+         if ($validate === true) {
         // Get the new car data from the request body
          $carData = $request->getParsedBody();
 
@@ -129,6 +170,11 @@ class CarController
         // Return a JSON response with the status code and message
          $response->getBody()->write(json_encode(['message' => $message]));
          return $response->withHeader('Content-Type', 'application/json')->withStatus($statusCode);
+
+        } else {
+            $response->getBody()->write($validate);
+            return $response;
+        }
     }
 
 

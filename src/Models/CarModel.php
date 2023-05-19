@@ -74,11 +74,11 @@ public function __construct()
 
     public function updateCar($carId, $carData)
      {
-         // Replace with the name of your table
-        $where = array('CarId' => $carId); // Specify the condition for the update
-        $result = $this->update($this->table_name, $carData, $where); // Call the base model update function
+         
+        $where = array('CarId' => $carId); 
+        $result = $this->update($this->table_name, $carData, $where); 
     
-        return $result; // Return the result of the update operation
+        return $result; 
     }
 
 

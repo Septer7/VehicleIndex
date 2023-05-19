@@ -1,0 +1,26 @@
+<?php
+
+class ElectricityConsumption {
+   private $id;
+   private $datetime;
+   private $consumption;
+
+   public function __construct($id, $datetime, $consumption) {
+      $this->id = $id;
+      $this->datetime = $datetime;
+      $this->consumption = $consumption;
+   }
+
+   public function getId() {
+      return $this->id;
+   }
+
+   public function getDatetime() {
+      return $this->datetime;
+   }
+
+   public function getConsumption() {
+      return $this->consumption;
+   }
+}
+
