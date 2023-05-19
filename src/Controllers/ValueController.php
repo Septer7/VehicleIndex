@@ -3,58 +3,106 @@
 namespace Vanier\Api\Controllers;
 
 use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request; 
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Vanier\Api\Models\ValueModel;
 
-class ValueController {
-  private $db;
+class ValueController
+{
+    
+    public $valueModel = null;
+    
+    public function __construct(){
 
-  public function __construct($db) {
-    $this->db = $db;
-  }
+        $this->valueModel = new ValueModel();
+    }
 
-  public function getAllValues() {
-    $query = "SELECT * FROM my_table";
-    $stmt = $this->db->prepare($query);
-    $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-  }
 
-  public function getValueById($id) {
-    $query = "SELECT * FROM my_table WHERE id = :id";
-    $stmt = $this->db->prepare($query);
-    $stmt->bindParam(":id", $id);
-    $stmt->execute();
-    return $stmt->fetch(PDO::FETCH_ASSOC);
-  }
 
-  public function createValue($type_id, $name, $description) {
-    $query = "INSERT INTO my_table (type_id, name, description) VALUES (:type_id, :name, :description)";
-    $stmt = $this->db->prepare($query);
-    $stmt->bindParam(":type_id", $type_id);
-    $stmt->bindParam(":name", $name);
-    $stmt->bindParam(":description", $description);
-    $stmt->execute();
-    return $this->getValueById($this->db->lastInsertId());
-  }
+    public function getModel(Request $request, Response  $response, array $args)
+    {
+        $valueId = $args['id'];
+        $valueModel = new EngineModel();  
+        $data = $valueModel->getEngineById((int)$valueId); 
+        $json_data = json_encode($data);
+        $response->getBody()->write($json_data);
+        return $response->withStatus(201)->withHeader("Content-Type", "application/json");
+    }
 
-  public function updateValue($id, $type_id, $name, $description) {
-    $query = "UPDATE my_table SET type_id = :type_id, name = :name, description = :description WHERE id = :id";
-    $stmt = $this->db->prepare($query);
-    $stmt->bindParam(":type_id", $type_id);
-    $stmt->bindParam(":name", $name);
-    $stmt->bindParam(":description", $description);
-    $stmt->bindParam(":id", $id);
-    $stmt->execute();
-    return $this->getValueById($id);
-  }
 
-  public function deleteValue($id) {
-    $query = "DELETE FROM my_table WHERE id = :id";
-    $stmt = $this->db->prepare($query);
-    $stmt->bindParam(":id", $id);
-    $stmt->execute();
-    return true;
-  }
+
+    public function getAllModel(Request $request, Response $response)
+    {
+        $value_model = $request->getQueryParams();
+        
+        $value_model = new ValueModel();
+
+        $data= $value_model->getAll($engine);
+        $json_data= json_encode($data);
+
+        $response->getBody()->write($json_data);
+
+        return $response->withStatus(201)->withHeader("Content-Type", "application/json");
+    }
+
+    public function addValue(Request $request, Response $response)
+    {
+       
+        $params = $request->getParsedBody();
+        $engine_size = $params['engine_size'];
+        $hp = $params['HP'];
+        $transmission = $params['Transmission'];
+    
+        $value_model = new ValueModel();
+        $value_model->insertEngine($engine_size, $hp, $transmission);
+    
+        $response->getBody()->write("New car value added successfully");
+        return $response;
+    }
+
+    
+     
+    public function deleteModel($request, $response, $args)
+    {
+        $CarId = $args['CarId'];
+        
+        $valueModel = new ValueModel();
+        
+        $deletedRows = $valueModel->deleteValue($CarId);
+        
+        if ($deletedRows === 0) {
+            $message = 'Car value missing, not found';
+            $statusCode = 404;
+        } else {
+            $message = 'Car Value deleted successfully';
+            $statusCode = 200;
+        }
+        
+        $response->getBody()->write(json_encode(['message' => $message]));
+         return $response->withHeader('Content-Type', 'application/json')->withStatus($statusCode);
+    }
+
+
+    public function updateValue(Request $request, Response $response, array $args)
+    {
+         $carId = $args['CarId'];
+
+         $carData = $request->getParsedBody();
+
+         $valueModel = new ValueModel();
+
+         $result = $valueModel->updateValue($carId, $carData);
+
+         if ($result === 0) {
+         $message = "Value missing, not found";
+         $statusCode = 404;
+         } else {
+         $message = "Car value updated successfully";
+         $statusCode = 200;
+         }
+
+        // Return a JSON response with the status code and message
+         $response->getBody()->write(json_encode(['message' => $message]));
+         return $response->withHeader('Content-Type', 'application/json')->withStatus($statusCode);
+    }
+
 }
-
-?>
