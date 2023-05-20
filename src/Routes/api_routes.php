@@ -9,6 +9,7 @@ use Vanier\Api\Controllers\FuelConController;
 use Vanier\Api\Controllers\VinController;
 use Vanier\Api\Controllers\AuthenticationController;
 use Vanier\Api\Controllers\ReviewController;
+use Vanier\Api\Controllers\RecallController;
 use Vanier\Api\Models\CarModel;
 
 // Import the app instance into this file's scope.
@@ -36,7 +37,7 @@ $app->get('/engine/{id}', [EngineController::class, 'getEngine']);
 $app->get('/vin/{vinNumber}', [VinController::class, 'getCarByVin']);
 $app->get('/vin/getManufacturer/{vinNumber}', [VinController::class, 'getManufacturerByVin']);
 
-$app->get('/recall/{recall_id}', [RecallController::class, 'getRecall']);
+$app->get('/recall/{recall_id}', [RecallController::class, 'getRecallByID']);
 
 
 $app->get('/reviews', [ReviewController::class,'getAllReviews']);
