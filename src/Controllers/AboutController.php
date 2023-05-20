@@ -43,14 +43,13 @@ class AboutController extends BaseController
         $exposed_resources['GET  | GET engine by id'] = '/engine/{id}|';
         $exposed_resources['DELETE  | delete engine'] = 'deleteEngine/{EngineId}';
         $exposed_resources['UPDATE  | update engine'] = 'updateEngine/{EngineId}';
-        // $exposed_resources['GET | Car Recalls by Car_ID'] = '/cars/{car_ID}/recalls';
+        
         // $exposed_resources['GET | Everithing Found by Car_ID'] = '/cars/{car_ID}/all';
 
         $exposed_resources['GET | Recall Details By Recall ID'] = '/recall/{recall_id}';
-        // $exposed_resources['GET | Recalls by Make'] = '/recall/make/{make_name}';
-        // $exposed_resources['GET | Recalls by Model'] = '/recall/model/{model_name}';
-
-    
+        $exposed_resources['GET | Recalls by Make'] = '/recall/make/{make_name}';
+        $exposed_resources['GET | Recalls by Model'] = '/recall/model/{model_name}';
+        $exposed_resources['GET | Car Recalls by Car_ID (Composite)'] = '/cars/{car_ID}/recalls';
 
         $exposed_resources['POST | Auth a User'] = '/token';
         $exposed_resources['POST | Create an Account'] = '/account';
