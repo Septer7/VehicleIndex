@@ -9,6 +9,8 @@ use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request as GuzzleRequest;    
 use GuzzleHttp\Psr7\Response as GuzzleResponse;
 use GuzzleHttp\Exception\RequestException;
+use Vanier\Api\Helpers\HelperFunctions;
+use Vanier\Api\Helpers\ResponseCodes;
 
 $api_vin_WMI = "https://vpic.nhtsa.dot.gov/api/vehicles/decodewmi/";
 $api_vin_DECODE = "https://vpic.nhtsa.dot.gov/api/vehicles/decodevinvalues/";
@@ -64,6 +66,8 @@ class VinController extends BaseController
 
     public function getManufacturerByVin(Request $request, Response  $response, array $args )
     {
+        $responseCodes = new ResponseCodes();
+        $helperFunctions = new HelperFunctions();
         // 1) Retrieve the parsed JWT form request object.
         $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
             
@@ -90,15 +94,22 @@ class VinController extends BaseController
         
         //var_dump($args["vinNumber"]);
         $vinNumber = substr($args["vinNumber"], 0, 3).'?format=json';
-        $data = searchForVin($clientWMI, $vinNumber);
-        
-        if (!empty($data)) {
+
+        if(!isset($vinNumber)){
+            $response_data = $responseCodes->makeCustomJSONError(HTTP_METHOD_NOT_ALLOWED, " Vin number incorrect..");
+            return $helperFunctions->response($response_data, HTTP_METHOD_NOT_ALLOWED, $response);
+        }
+
+        $preFormat = searchForVin($clientWMI, $vinNumber);
+        if (!empty($preFormat->Results)) {
+            $data =  $preFormat->Results;
             $json_data = json_encode($data);
             $response->getBody()->write($json_data);
 
             return $response->withStatus(HTTP_OK)->withHeader("Content_type", APP_MEDIA_TYPE_JSON);
         }else{
-             return $response->withStatus(400);
+             $response_data = $responseCodes->makeCustomJSONError(HTTP_METHOD_NOT_ALLOWED, " Vin number incorrect or too Short to find the Manufacturer..");
+             return $helperFunctions->response($response_data, HTTP_METHOD_NOT_ALLOWED, $response);
         }
         
     }
@@ -108,6 +119,7 @@ class VinController extends BaseController
 function searchForVin(GuzzleClient $client, $vinNumber) {
     $response = $client->request('GET', $vinNumber);
     $data = json_decode($response->getBody()->getContents());
+    
     return $data;
 }
 

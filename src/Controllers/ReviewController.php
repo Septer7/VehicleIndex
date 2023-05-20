@@ -81,7 +81,45 @@ class ReviewController extends BaseController
             $reviews = $review_model->getAll();
         return $helperFunctions->checkData($reviews, $response, $request);
     }
-    
+     /**
+     * Gets all reviews made by the specified user (GET /cars/{car_id}/reviews)
+     */
+    public function getReviewByCarID(Request $request, Response $response, array $uri_args) {
+        // 1) Retrieve the parsed JWT form request object.
+        $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
+        $filters = $request->getQueryParams();   
+        // 2) Log request info into th ws_logtable.
+        $logging_model = new WSLoggingModel();
+        $request_info = $_SERVER["REMOTE_ADDR"].' '.$request->getUri()->getPath();
+        $logging_model->logUserAction($token_payload, $request_info);
+
+        //
+       $reviews = array();
+       $response_data = array();
+       $responseCodes = new ResponseCodes();
+       $helperFunctions = new HelperFunctions();
+       $review_model = new ReviewModel();
+   
+       $input_page_number = filter_input(INPUT_GET, "page", FILTER_VALIDATE_INT);
+       $input_per_page = filter_input(INPUT_GET, "per_page", FILTER_VALIDATE_INT);
+       if ($input_page_number == null) 
+           $input_page_number = 1;
+       if ($input_per_page == null)
+           $input_per_page = 10;
+       $review_model->setPaginationOptions($input_page_number, $input_per_page);
+   
+       // Retrieve the review if from the request's URI.
+       $car_id= $uri_args["car_id"];
+       if (isset($car_id)) {
+           // Fetch the info about the specified review.
+           $response_data = $review_model->getCarReviews($filters, $car_id);
+           
+           $data['data'] = $response_data;
+
+           return $helperFunctions->checkData($data, $response, $request);
+       }
+       return $responseCodes->httpMethodNotAllowed();
+   }
     /**
      * Gets all reviews made by the specified user (GET /users/{user_id}/reviews)
      */
