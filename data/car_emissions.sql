@@ -207,7 +207,7 @@ CREATE TABLE `value` (
 
 INSERT INTO `value` (`CarID`, `Price`, `Tax`, `Incentives`) VALUES
 (1, '12000.95', '25.00', NULL),
-(2, '25000.99', '30.00', '5000.00')
+(2, '25000.99', '30.00', '5000.00'),
 (3, '31300.00', '25.00', NULL),
 (4, '84500.00', '25.00', NULL),
 (5, '105200.00', '25.00', NULL),
@@ -322,7 +322,7 @@ ALTER TABLE `ws_users`
 ALTER TABLE `car`
   ADD PRIMARY KEY (`CarID`);
 ALTER TABLE `car`
-  MODIFY `CarID` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `CarID` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- Constraints for table `electricity_consumption`
 --
