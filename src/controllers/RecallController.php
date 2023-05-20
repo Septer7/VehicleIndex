@@ -34,6 +34,8 @@ class RecallController extends BaseController
         //
         
         $api_recall_DECODE = "https://vrdb-tc-apicast-production.api.canada.ca/eng/vehicle-recall-database/v1/recall-summary/recall-number/";
+        // $api_recall_key = ;
+        // var_dump($api_recall_key);
         $clientDECODE = new GuzzleClient(['base_uri' => $api_recall_DECODE]);
         $data = array();
         $response_data = array();
@@ -49,8 +51,8 @@ class RecallController extends BaseController
          // Retrieve the query string parameter from the request's URI.
         
         //var_dump($args["vinNumber"]);
-        $vinNumber = $args["recallID"].'?format=json';
-        $data = searchForRecall($clientDECODE, $vinNumber);
+        $vinNumber = $args["recall_id"].'?format=json';
+        $data = searchForRecall($request, $clientDECODE, $vinNumber);
         
         if (!empty($data)) {
             $json_data = json_encode($data);
@@ -92,7 +94,7 @@ class RecallController extends BaseController
         
         //var_dump($args["vinNumber"]);
         $vinNumber = substr($args["vinNumber"], 0, 3).'?format=json';
-        $data = searchForRecall($clientWMI, $vinNumber);
+        $data = searchForRecall($request, $clientWMI, $vinNumber);
         
         if (!empty($data)) {
             $json_data = json_encode($data);
@@ -108,7 +110,12 @@ class RecallController extends BaseController
     
 }
 function searchForRecall(Request $request, GuzzleClient $client, $vinNumber) {
-    $response = $client->request('GET', $vinNumber);
+    $response = $client->request('GET', $vinNumber,[
+        'headers' => [
+            'Accept'     => 'application/json',
+            'user-key'      => '528c10be4ab9c135cf12829dd38fd5c7'
+        ]
+        ]);
     $data = json_decode($response->getBody()->getContents());
     return $data;
 }
