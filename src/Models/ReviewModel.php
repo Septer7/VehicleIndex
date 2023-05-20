@@ -42,8 +42,16 @@ class ReviewModel extends BaseModel {
         return $result;
     }
 
-
-
+    function  getCarReviews($filters,$car_id){
+        $sql = "SELECT * FROM $this->table_name  INNER JOIN cars
+        ON cars.car_id = review.car_id WHERE review.car_id = ?";
+        //  if(isset($filters["length"])){
+        //     $sql .= " AND film.length >= :lengt";
+        //     $filters_value[":lengt"] = $filters["length"];
+        // }
+        $result = $this->run($sql, [$car_id])->fetch();
+        return $result;
+    }
     /**
      * Get all review records whose star rating matches the specified value
      */

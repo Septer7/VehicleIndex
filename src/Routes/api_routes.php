@@ -34,15 +34,16 @@ $app->get('/engines', [EngineController::class, 'getAllEngine']);
 $app->get('/engine/{id}', [EngineController::class, 'getEngine']);   
 
 $app->get('/vin/{vinNumber}', [VinController::class, 'getCarByVin']);
-$app->get('/vin/getManufacturer/{vinNumber}', [VinController::class, 'getCarByVin']);
+$app->get('/vin/getManufacturer/{vinNumber}', [VinController::class, 'getManufacturerByVin']);
 
-$app->get('/recall/{recallID}', [RecallController::class, 'getRecall']);
+$app->get('/recall/{recall_id}', [RecallController::class, 'getRecall']);
 
 
 $app->get('/reviews', [ReviewController::class,'getAllReviews']);
 $app->get('/reviews/{review_id:[0-9]+}', [ReviewController::class,'getReviewById']);
 $app->get('/reviews/make/{make_name}', [ReviewController::class,'getReviewByMake']);
 $app->get('/reviews/model/{model_name}', [ReviewController::class,'getReviewByModel']);
+$app->get('/cars/{car_id}/reviews', [ReviewController::class,'getReviewByCarID']);
 
 $app->get('/fuel_consumption', [FuelConController::class,'getAllFuels']);
 $app->get('/fuel_consumption/{id}', [FuelConController::class,'getCarId']);
