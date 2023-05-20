@@ -57,11 +57,8 @@ $app->post('/addFuelConsumption', [FuelConController::class, 'addFuelConsumption
 $app->delete('/deleteCar/{CarId}',[CarController::class, 'deleteCar']);
 $app->delete('/deleteEngine/{CarId}',[EngineController::class, 'deleteEngine']);
 $app->delete('/reviews', [ReviewController::class, 'handleDeleteReview']);
-<<<<<<< Updated upstream
 $app->delete('/emissions', [ReviewController::class, 'handleDeleteEmissions']);
 $app->delete('/deletefuelConsumption/{CarID}', [FuelConController::class, 'deleteFuelConsumption']);
-=======
->>>>>>> Stashed changes
 
 $app->put('/updateCar/{CarId}',[CarController::class, 'updateCar']);
 $app->put('/updateFuel/{CarId}',[FuelConController::class, 'updateFuelConsumption']);
