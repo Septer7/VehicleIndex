@@ -38,7 +38,9 @@ $app->get('/vin/{vinNumber}', [VinController::class, 'getCarByVin']);
 $app->get('/vin/getManufacturer/{vinNumber}', [VinController::class, 'getManufacturerByVin']);
 
 $app->get('/recall/{recall_id}', [RecallController::class, 'getRecallByID']);
-
+$app->get('/recall/make/{make_name}', [RecallController::class, 'getRecallByMake']);
+$app->get('/recall/model/{model_name}', [RecallController::class, 'getRecallByModel']);
+$app->get('/cars/{car_id}/recalls', [RecallController::class, 'getRecallByCarID']);
 
 $app->get('/reviews', [ReviewController::class,'getAllReviews']);
 $app->get('/reviews/{review_id:[0-9]+}', [ReviewController::class,'getReviewById']);

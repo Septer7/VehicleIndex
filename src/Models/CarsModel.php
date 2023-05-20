@@ -7,7 +7,6 @@ use Vanier\Api\Models\BaseModel;
 class CarsModel extends BaseModel{
     
 
-
 private $table_name="cars";
 
 public function __construct()
@@ -54,7 +53,6 @@ public function __construct()
 
         return $this->run($sql, $filters_value)->fetchAll();
     }
-
 
 
     function getCarID($year,$make,$model){
